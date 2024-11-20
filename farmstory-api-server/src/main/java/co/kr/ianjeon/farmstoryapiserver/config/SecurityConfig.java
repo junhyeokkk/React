@@ -29,6 +29,7 @@ public class SecurityConfig {
 
         // 세션, 폼로그인 비활성화
         http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(CsrfConfigurer::disable)
                 .httpBasic(HttpBasicConfigurer::disable)
                 .formLogin(FormLoginConfigurer::disable)

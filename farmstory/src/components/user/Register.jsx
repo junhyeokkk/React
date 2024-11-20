@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { postUser } from "../../api/userAPI";
 
 const initState = {
   uid: "",
-  pass1: "",
+  pass: "",
   name: "",
   nick: "",
   email: "",
@@ -15,6 +15,7 @@ const initState = {
 };
 
 export default function Register() {
+  const navigate = useNavigate();
   const [user, setUser] = useState({ ...initState });
 
   const changeHandler = (e) => {
@@ -28,6 +29,15 @@ export default function Register() {
     //회원가입
     const savedUser = postUser(user);
     console.log("savedUser : " + savedUser);
+
+    if (!savedUser) {
+      alert("회원가입이 완료되었습니다.");
+    } else {
+      alert("회원가입이 실패되었습니다.");
+    }
+
+    // 로그인 전환
+    navigate("/user/login");
   };
   return (
     <section className="register">
@@ -55,9 +65,9 @@ export default function Register() {
             <td>
               <input
                 type="password"
-                name="pass1"
+                name="pass"
                 placeholder="비밀번호 입력"
-                value={user.pass1}
+                value={user.pass}
                 onChange={changeHandler}
               />
             </td>
