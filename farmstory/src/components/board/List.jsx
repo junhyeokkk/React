@@ -1,8 +1,39 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import useCates from "./../../hooks/useCates";
+import { useEffect, useState } from "react";
+import { getArticle } from "../../api/articleAPI";
+import Pagenation from "./Pagenation";
+
+const initState = {
+  dtoList: [],
+  cate: "",
+  pg: 1,
+  size: 10,
+  total: 0,
+  startNo: 0,
+  start: 0,
+  end: 0,
+  prev: false,
+  next: false,
+  type: null,
+  keyword: null,
+};
 
 export default function List() {
   const [cate1, cate2] = useCates();
+  const [data, setData] = useState(initState);
+
+  const [searchParams] = useSearchParams();
+  const pg = searchParams.get("pg") || 1;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getArticle(cate2, pg);
+      console.log(data);
+      setData(data);
+    };
+    fetchData();
+  }, [cate2, pg]); //cate2가 바뀔때마다 useEffect 실행
 
   return (
     <section className="list">
@@ -25,36 +56,28 @@ export default function List() {
           <th>날짜</th>
           <th>조회</th>
         </tr>
-        <tr>
-          <td>1</td>
-          <td>
-            <Link to={`/board/view?cate1=${cate1}&cate2=${cate2}`}>
-              공지사항 게시물입니다.[3]
-            </Link>
-          </td>
-          <td>길동이</td>
-          <td>20-05-12</td>
-          <td>12</td>
-        </tr>
+        {data?.dtoList?.length > 0 ? (
+          data.dtoList.map((article, index) => (
+            <tr key={index}>
+              <td>{data.startNo - index}</td>
+              <td>
+                <Link to={`/board/view?cate1=${cate1}&cate2=${cate2}`}>
+                  {article.title}[{article.comment}]
+                </Link>
+              </td>
+              <td>{article.writer}</td>
+              <td>{article.rdate}</td>
+              <td>{article.hit}</td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan="5">No articles found.</td>
+          </tr>
+        )}
       </table>
 
-      <div className="page">
-        <a href="#" className="prev">
-          이전
-        </a>
-        <a href="#" className="num current">
-          1
-        </a>
-        <a href="#" className="num">
-          2
-        </a>
-        <a href="#" className="num">
-          3
-        </a>
-        <a href="#" className="next">
-          다음
-        </a>
-      </div>
+      <Pagenation data={data} cate1={cate1} cate2={cate2} />
 
       <Link
         to={`/board/write?cate1=${cate1}&cate2=${cate2}`}

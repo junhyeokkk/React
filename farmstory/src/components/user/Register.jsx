@@ -30,7 +30,7 @@ export default function Register() {
     const savedUser = postUser(user);
     console.log("savedUser : " + savedUser);
 
-    if (!savedUser) {
+    if (savedUser) {
       alert("회원가입이 완료되었습니다.");
     } else {
       alert("회원가입이 실패되었습니다.");

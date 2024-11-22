@@ -47,9 +47,8 @@ public class UserController {
 
             // 토큰 전송
             Map<String, Object> resultMap = new HashMap<>();
-            resultMap.put("useranme", user.getUid());
+            resultMap.put("username", user.getUid());
             resultMap.put("role", user.getRole());
-            resultMap.put("grantType", " Bearer");
             resultMap.put("accessToken", accessToken);
             resultMap.put("refreshToken", refreshToken);
 

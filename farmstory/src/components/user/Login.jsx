@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Await, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { postUserLogin } from "../../api/userAPI";
 import { useDispatch } from "react-redux";
 import { login } from "../../slices/userSlice";
@@ -8,6 +8,7 @@ const initState = {
   uid: "",
   pass: "",
 };
+
 export default function Login() {
   const [user, setUser] = useState({ ...initState });
   const dispatch = useDispatch();
@@ -18,14 +19,15 @@ export default function Login() {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     //로그인
-    const token = postUserLogin(user);
+    const token = await postUserLogin(user);
     console.log("token" + JSON.stringify(token));
 
     if (token) {
+      console.log("fhrm?");
       // 리덕스 reducer(login) 호출
       dispatch(login(token));
 

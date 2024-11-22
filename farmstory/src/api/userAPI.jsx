@@ -1,5 +1,5 @@
 import axios from "axios";
-import { USER_LOGIN_URI, USER_URI } from "./URI";
+import { USER_LOGIN_URI, USER_URI } from "./_URI";
 
 export const postUser = async (data) => {
   try {

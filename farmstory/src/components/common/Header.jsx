@@ -1,6 +1,22 @@
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../../slices/userSlice";
+
+// 리덕스 접근 할 수 있도록
 
 export default function Header() {
+  const dispatch = useDispatch();
+  const userSlice = useSelector((state) => state.userSlice);
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    // 리덕스 로그아웃 호출
+    dispatch(logout());
+
+    // 로그인 전환
+    navigate("/user/login");
+  };
+
   return (
     <>
       <header>
@@ -9,12 +25,19 @@ export default function Header() {
         </Link>
         <p>
           <Link to="/">HOME |</Link>
-          <Link to="/user/login">로그인 |</Link>
-          <Link to="/user/register">회원가입 |</Link>
-          <a href="./myinfo/cart.html">나의정보 |</a>
-          <a href="#">로그아웃 |</a>
-          <Link to="/admin">관리자 |</Link>
-          <a href="./community/qna.html">고객센터</a>
+          {!userSlice.username ? (
+            <>
+              <Link to="/user/login">로그인 |</Link>
+              <Link to="/user/terms">회원가입 |</Link>
+            </>
+          ) : (
+            <>
+              <a href="./myinfo/cart.html">나의정보 |</a>
+              <Link onClick={logoutHandler}>로그아웃 |</Link>
+              <Link to="/admin/">관리자 |</Link>
+              <a href="./community/qna.html">고객센터</a>
+            </>
+          )}
         </p>
         <img src="/images/head_txt_img.png" alt="3만원 이상 무료배송" />
 
