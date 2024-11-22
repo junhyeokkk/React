@@ -3,6 +3,7 @@ import useCates from "../../hooks/useCates";
 
 export default function Modify() {
   const [cate1, cate2] = useCates();
+  
   return (
     <section className="modify">
       <h1>글수정</h1>

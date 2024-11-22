@@ -6,13 +6,12 @@ import co.kr.ianjeon.farmstoryapiserver.dto.PageResponseDTO;
 import co.kr.ianjeon.farmstoryapiserver.entity.Article;
 import co.kr.ianjeon.farmstoryapiserver.entity.User;
 import co.kr.ianjeon.farmstoryapiserver.repository.ArticleRepository;
-import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
+
 
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class ArticleService {
 
         int total  = (int) pageArticle.getTotalElements();
 
-        return PageResponseDTO.builder()
+        return PageResponseDTO.<ArticleDTO>builder()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(articleDTOs)
                 .total(total)

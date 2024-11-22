@@ -1,3 +1,4 @@
+import View from "../../components/board/View";
 import DefaultLayout from "../../layouts/DefaultLayout";
 import SubLayout from "../../layouts/SubLayout";
 
@@ -5,7 +6,7 @@ export default function ViewPage() {
   return (
     <DefaultLayout>
       <SubLayout>
-        <h3>Board ViewPage</h3>
+        <View/>
       </SubLayout>
     </DefaultLayout>
   );

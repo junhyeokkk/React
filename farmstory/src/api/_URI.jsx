@@ -8,3 +8,5 @@ export const USER_LOGIN_URI = `${SERVER_HOST}/user/login`;
 export const ARTICLE_URI = `${SERVER_HOST}/article`;
 
 // product
+export const PRODUCT_URI = `${SERVER_HOST}/product`;
+export const PRODUCT_THUMB_URI = `${SERVER_HOST}/product/thumb`;

@@ -32,7 +32,7 @@ public class ArticleController {
 
       PageResponseDTO articleDTOS = articleService.findAll(pageRequestDTO);
 
-      log.info("Asdfasf" + articleDTOS.getDtoList().get(0).getTitle());
+
 
         return articleDTOS;
 
